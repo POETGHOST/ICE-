@@ -1,23 +1,31 @@
-const { inherits } = require('util');
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const { Server } = require('socket.io');
 
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
-app.get('/', function(req, res){
-  res.sendfile('index.html');
+app.use(express.static(__dirname));
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
   console.log('user connected');
-  socket.on('chat message', function(msg){
+
+  socket.on('chat message', function(msg) {
     io.emit('chat message', msg);
   });
-  socket.on('disconnect', function(){
+
+  socket.on('disconnect', function() {
     console.log('user disconnected');
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, function() {
+  console.log('listening on *:' + PORT);
 });
