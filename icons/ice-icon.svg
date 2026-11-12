@@ -1,8 +1,32 @@
+
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#101a20"/>
-  <circle cx="256" cy="256" r="154" fill="#c6f36b"/>
-  <path d="M256 120c-75 0-136 57-136 128 0 32 13 61 35 83l-12 59 64-29c16 8 33 12 51 12 75 0 136-57 136-128S331 120 256 120Z" fill="#101a20"/>
-  <circle cx="204" cy="250" r="14" fill="#c6f36b"/>
-  <circle cx="256" cy="250" r="14" fill="#c6f36b"/>
-  <circle cx="308" cy="250" r="14" fill="#c6f36b"/>
+  <defs>
+    <linearGradient id="frozen" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#c9fbff"/>
+      <stop offset="55%" stop-color="#53dfff"/>
+      <stop offset="80%" stop-color="#168fc9"/>
+      <stop offset="100%" stop-color="#eaffff"/>
+    </linearGradient>
+    <filter id="iceGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="100" fill="#06121d"/>
+
+  <text x="256" y="330"
+        text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="205"
+        font-weight="900"
+        letter-spacing="-12"
+        fill="url(#frozen)"
+        stroke="#d8fbff"
+        stroke-width="2"
+        filter="url(#iceGlow)">ice</text>
 </svg>
