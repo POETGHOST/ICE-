@@ -1,22 +1,30 @@
 
-version: "1"
-projects:
-- name: My project
-  environments:
-  - name: Production
-    databases:
-    - name: ICE
-      databaseName: ice_857e
-      user: ice_857e_user
-      plan: free
-      region: virginia
-      ipAllowList:
-      - source: 0.0.0.0/0
-        description: everywhere
-      postgresMajorVersion: "18"
-envVars:
-  - key: JWT_SECRET
-    generateValue: true
-  - key: DATABASE_URL
-    sync: false 
 
+version: "1"
+
+services:
+  - type: web
+    name: ice-app
+    runtime: node
+    plan: free
+    region: virginia
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ice-db
+          property: connectionString
+
+databases:
+  - name: ice-db
+    databaseName: ice_857e
+    user: ice_857e_user
+    plan: free
+    region: virginia
+    postgresMajorVersion: "18"
