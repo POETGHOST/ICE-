@@ -23,10 +23,18 @@
   const conversation = document.getElementById('conversation');
   const messageInput = document.getElementById('message-input');
   const toast = document.getElementById('toast');
+  const studyTimerEl = document.getElementById('study-timer');
+  const studyNotesEl = document.getElementById('study-notes');
+  const studyTaskListEl = document.getElementById('study-task-list');
+  const studyTaskCountEl = document.getElementById('study-task-count');
+  const studyTaskInputEl = document.getElementById('study-task-input');
+  const studyTaskFormEl = document.getElementById('study-task-form');
   let activeId = 'maya';
   let showUnreadOnly = false;
   let toastTimer;
   let persisted = {};
+  let studySecondsLeft = 45 * 60;
+  let studyTimer = null;
   try { persisted = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; } catch (_) { persisted = {}; }
 
   function escapeText(value) {
@@ -42,6 +50,62 @@
   function save() {
     try { localStorage.setItem(storageKey, JSON.stringify(persisted)); }
     catch (_) { showToast('Could not save this update in your browser.'); }
+  }
+  function padNumber(value) { return String(value).padStart(2, '0'); }
+  function formatStudyTime(totalSeconds) {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
+  }
+  function updateStudyTimer() {
+    studyTimerEl.textContent = formatStudyTime(studySecondsLeft);
+  }
+  function stopStudyTimer() {
+    if (studyTimer) {
+      window.clearInterval(studyTimer);
+      studyTimer = null;
+    }
+  }
+  function startStudyTimer() {
+    if (studyTimer) return;
+    studyTimer = window.setInterval(() => {
+      if (studySecondsLeft > 0) {
+        studySecondsLeft -= 1;
+        updateStudyTimer();
+      } else {
+        stopStudyTimer();
+        showToast('Focus session complete. Great work.');
+      }
+    }, 1000);
+  }
+  function resetStudyTimer() {
+    stopStudyTimer();
+    studySecondsLeft = 45 * 60;
+    updateStudyTimer();
+  }
+  function renderStudyTasks() {
+    const tasks = Array.isArray(persisted.studyTasks) ? persisted.studyTasks : [];
+    studyTaskListEl.replaceChildren();
+    tasks.forEach((task, index) => {
+      const item = document.createElement('li');
+      item.className = `study-task-item${task.done ? ' done' : ''}`;
+      item.innerHTML = `
+        <label>
+          <input type="checkbox" data-task-index="${index}" ${task.done ? 'checked' : ''}>
+          <span>${escapeText(task.text)}</span>
+        </label>
+        <button type="button" class="study-task-remove" data-task-index="${index}" aria-label="Remove task">×</button>
+      `;
+      studyTaskListEl.appendChild(item);
+    });
+    studyTaskCountEl.textContent = String(tasks.length);
+  }
+  function ensureStudyState() {
+    const notes = persisted.studyNotes || '';
+    studyNotesEl.value = notes;
+    renderStudyTasks();
+    updateStudyTimer();
   }
   function getMessages(contact) { return Array.isArray(persisted.messages && persisted.messages[contact.id]) ? persisted.messages[contact.id] : contact.messages; }
   function renderContacts(query = '') {
@@ -128,6 +192,7 @@
   renderContacts();
   renderMessages();
   renderFeed();
+  ensureStudyState();
   document.getElementById('online-people').innerHTML = contacts.slice(0, 4).map((person) => `<button type="button" class="online-person" data-contact="${person.id}"><span class="avatar ${initialsClass(person.color)}">${escapeText(person.initials)}</span><span>${escapeText(person.name.split(' ')[0])}</span><i></i></button>`).join('');
   document.querySelectorAll('.online-person').forEach((button) => button.addEventListener('click', () => selectContact(button.dataset.contact)));
 
@@ -173,10 +238,62 @@
     const enabled = document.body.classList.contains('study-mode');
     showToast(enabled ? 'Private study space enabled.' : 'Private study space paused.');
   });
+  document.getElementById('study-start').addEventListener('click', () => {
+    startStudyTimer();
+    showToast('Focus timer started.');
+  });
+  document.getElementById('study-pause').addEventListener('click', () => {
+    stopStudyTimer();
+    showToast('Focus timer paused.');
+  });
+  document.getElementById('study-reset').addEventListener('click', () => {
+    resetStudyTimer();
+    showToast('Focus timer reset.');
+  });
   document.querySelectorAll('[data-study-action]').forEach((button) => button.addEventListener('click', () => {
     const action = button.dataset.studyAction;
     showToast(action === 'notes' ? 'Study notes opened in a private workspace.' : 'Your study tasks are ready to review.');
   }));
+  studyNotesEl.addEventListener('input', () => {
+    persisted.studyNotes = studyNotesEl.value;
+    save();
+  });
+  studyTaskFormEl.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const taskText = studyTaskInputEl.value.trim();
+    if (!taskText) return;
+    const tasks = Array.isArray(persisted.studyTasks) ? persisted.studyTasks.slice() : [];
+    tasks.push({ text: taskText, done: false });
+    persisted.studyTasks = tasks;
+    studyTaskInputEl.value = '';
+    save();
+    renderStudyTasks();
+  });
+  studyTaskListEl.addEventListener('change', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement) || !target.matches('input[type="checkbox"]')) return;
+    const tasks = Array.isArray(persisted.studyTasks) ? persisted.studyTasks : [];
+    const index = Number(target.dataset.taskIndex);
+    if (!Number.isInteger(index) || !tasks[index]) return;
+    tasks[index].done = target.checked;
+    persisted.studyTasks = tasks;
+    save();
+    renderStudyTasks();
+  });
+  studyTaskListEl.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement) || !target.matches('.study-task-remove')) return;
+    const index = Number(target.dataset.taskIndex);
+    const tasks = Array.isArray(persisted.studyTasks) ? persisted.studyTasks : [];
+    tasks.splice(index, 1);
+    persisted.studyTasks = tasks;
+    save();
+    renderStudyTasks();
+  });
+  document.getElementById('add-note').addEventListener('click', () => {
+    studyNotesEl.focus();
+    showToast('Private note pad ready.');
+  });
   document.getElementById('global-search').addEventListener('keydown', (event) => { if (event.key === 'Enter') { document.getElementById('chat-search').value = event.currentTarget.value; renderContacts(event.currentTarget.value); document.getElementById('chat-search').focus(); } });
   document.getElementById('emoji-button').addEventListener('click', () => { const start = messageInput.selectionStart ?? messageInput.value.length; messageInput.value = `${messageInput.value.slice(0, start)}😊${messageInput.value.slice(start)}`; messageInput.focus(); });
   document.getElementById('reel-toggle').addEventListener('click', () => showToast('Short-form content is in the preview feed for a quick social scroll.'));

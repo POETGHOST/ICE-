@@ -37,14 +37,31 @@
             <span class="study-pill">90 min</span>
             <span class="study-pill mute">Quiet mode</span>
           </div>
-          <div class="study-metric">
-            <strong>00:42:13</strong>
-            <span>deep work timer</span>
+          <div class="study-timer-wrap">
+            <div class="study-timer" id="study-timer">00:45:00</div>
+            <div class="study-timer-controls">
+              <button type="button" id="study-start" class="study-timer-button">Start</button>
+              <button type="button" id="study-pause" class="study-timer-button subtle">Pause</button>
+              <button type="button" id="study-reset" class="study-timer-button subtle">Reset</button>
+            </div>
           </div>
           <div class="study-actions">
             <button type="button" class="study-action subtle" data-study-action="notes">Notes</button>
             <button type="button" class="study-action" data-study-action="tasks">Tasks</button>
           </div>
+          <section class="study-subpanel notes-panel">
+            <div class="panel-head"><h3>Study notes</h3><button type="button" id="add-note" class="tiny-button" aria-label="Add study notes">＋</button></div>
+            <textarea id="study-notes" aria-label="Study notes" placeholder="Quick thoughts, formulas, and ideas..."></textarea>
+          </section>
+          <section class="study-subpanel tasks-panel">
+            <div class="panel-head"><h3>Tasks</h3><span class="study-badge" id="study-task-count">0</span></div>
+            <ul id="study-task-list" class="study-task-list"></ul>
+            <form id="study-task-form" class="study-task-form">
+              <label class="visually-hidden" for="study-task-input">Add task</label>
+              <input id="study-task-input" type="text" maxlength="120" placeholder="Add a study task">
+              <button type="submit">Add</button>
+            </form>
+          </section>
         </section>
 
         <section class="inbox" aria-label="Your conversations">
