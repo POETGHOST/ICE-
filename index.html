@@ -3,43 +3,82 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#10131c">
-    <title>ICE Chat</title>
+    <meta name="theme-color" content="#11131c">
+    <title>ICE — conversations, your way</title>
     <link rel="stylesheet" href="./style.css">
     <script src="./app.js" defer></script>
   </head>
   <body>
-    <main class="chat-shell" aria-label="ICE chat">
-      <header class="chat-header">
-        <div class="brand-mark" aria-hidden="true">I</div>
-        <div class="brand-copy">
-          <h1>ICE Chat</h1>
-          <p>Simple, cool conversations.</p>
-        </div>
-        <div class="connection" aria-live="polite">
-          <span class="connection-dot" aria-hidden="true"></span>
-          <span id="connection-status">On this device</span>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="ICE home"><span class="brand-symbol">i</span><span>ice<span class="brand-period">.</span></span></a>
+        <div class="topbar-tools">
+          <button type="button" class="icon-button" id="search-toggle" aria-label="Search messages" title="Search messages">⌕</button>
+          <button type="button" class="icon-button" id="theme-toggle" aria-label="Toggle light theme" title="Toggle theme">☼</button>
+          <div class="avatar" aria-label="Your profile">Y</div>
         </div>
       </header>
 
-      <section class="chat-content" aria-label="Conversation">
-        <div class="welcome" id="welcome">
-          <div class="welcome-icon" aria-hidden="true">✦</div>
-          <h2>Your chat starts here</h2>
-          <p>Send a message to get the conversation going.</p>
-        </div>
-        <ul id="messages" class="messages" aria-live="polite" aria-relevant="additions"></ul>
-      </section>
+      <div class="layout">
+        <aside class="tool-rail" aria-label="Chat tools">
+          <div class="rail-label">YOUR SPACE</div>
+          <div class="space-card active-space"><span class="space-icon">✦</span><span><strong>Everyday</strong><small>Your personal chat</small></span><i></i></div>
+          <div class="rail-divider"></div>
+          <div class="rail-label">QUICK TOOLS</div>
+          <button class="rail-tool" type="button" id="rail-search"><span>⌕</span>Find a message</button>
+          <button class="rail-tool" type="button" id="rail-emoji"><span>☺</span>Emoji picker</button>
+          <button class="rail-tool" type="button" id="rail-attach"><span>⌁</span>Share a file</button>
+          <section class="tip-card"><span class="tip-spark">✧</span><strong>A little tip</strong><p>Your local chat history stays in this browser, on this device.</p></section>
+          <div class="rail-bottom"><span class="status-pulse"></span><span id="connection-status">On this device</span></div>
+        </aside>
 
-      <form id="message-form" class="composer">
-        <label class="visually-hidden" for="message-input">Write a message</label>
-        <input id="message-input" name="message" type="text" placeholder="Write a message…" autocomplete="off" maxlength="2000" required>
-        <button type="submit" aria-label="Send message">
-          <span>Send</span>
-          <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M3 10 17 3l-4.5 14-2.7-5.3L3 10Zm6.8 1.7L17 3" /></svg>
-        </button>
-      </form>
-      <p class="footnote" id="storage-note">Messages are saved in this browser on this device.</p>
+        <section class="chat-panel" aria-label="ICE chat">
+          <header class="chat-heading">
+            <div class="chat-avatar">✦</div>
+            <div class="chat-title"><h1>Everyday chat</h1><p id="chat-subtitle">A quiet place for your thoughts</p></div>
+            <div class="chat-actions">
+              <button type="button" class="text-action" id="clear-history" title="Clear messages saved in this browser">Clear chat</button>
+              <button type="button" class="mobile-search icon-button" id="mobile-search" aria-label="Search messages">⌕</button>
+            </div>
+          </header>
+
+          <div class="search-bar" id="search-bar" hidden>
+            <span aria-hidden="true">⌕</span>
+            <label class="visually-hidden" for="search-input">Search chat messages</label>
+            <input id="search-input" type="search" placeholder="Search this conversation…" autocomplete="off">
+            <button type="button" id="search-close" aria-label="Close search">×</button>
+            <span class="search-count" id="search-count"></span>
+          </div>
+
+          <section class="conversation" id="conversation" aria-label="Messages">
+            <div class="date-divider"><span>YOUR CONVERSATION</span></div>
+            <div class="welcome" id="welcome"><div class="welcome-mark">✦</div><h2>Make yourself at home</h2><p>Send a message, share a thought, or try a quick tool.</p></div>
+            <ul id="messages" class="messages" aria-live="polite" aria-relevant="additions"></ul>
+          </section>
+
+          <div class="emoji-picker" id="emoji-picker" hidden aria-label="Choose an emoji">
+            <button type="button" aria-label="smiling face">😊</button><button type="button" aria-label="heart eyes">😍</button><button type="button" aria-label="winking face">😉</button><button type="button" aria-label="laughing">😂</button><button type="button" aria-label="thinking face">🤔</button><button type="button" aria-label="party popper">🎉</button><button type="button" aria-label="thumbs up">👍</button><button type="button" aria-label="sparkles">✨</button><button type="button" aria-label="red heart">❤️</button><button type="button" aria-label="wave">👋</button>
++          </div>
+
+          <form id="message-form" class="composer">
+            <input id="file-input" type="file" hidden>
+            <button type="button" class="composer-tool" id="attach-button" aria-label="Attach a file" title="Attach a file">＋</button>
+            <label class="visually-hidden" for="message-input">Write a message</label>
+            <input id="message-input" name="message" placeholder="Write something…" autocomplete="off" maxlength="2000">
+            <button type="button" class="composer-tool emoji-toggle" id="emoji-button" aria-label="Choose an emoji" title="Choose an emoji">☺</button>
+            <button type="submit" class="send-button"><span>Send</span><span aria-hidden="true">↗</span></button>
+          </form>
+          <p class="composer-note" id="storage-note">Saved on this device · only you can see this local chat</p>
+        </section>
+
+        <aside class="details-panel" aria-label="Conversation details">
+          <div class="details-top"><span class="eyebrow">A MOMENT FOR YOU</span><div class="clock-face">☾</div><div class="local-time" id="local-time">--:--</div><p id="local-date">Loading your local date…</p></div>
+          <div class="detail-divider"></div>
+          <section class="activity-card"><span class="eyebrow">YOUR ACTIVITY</span><div class="activity-number" id="message-count">0</div><p>messages in this chat</p><div class="activity-line"><span id="activity-fill"></span></div><small id="character-count">0 characters exchanged</small></section>
+          <div class="details-note"><span>✧</span><p>Good conversations don't need to be complicated.</p></div>
+          <div class="details-footer">ICE <span>·</span> MADE FOR YOUR MOMENTS</div>
+        </aside>
+      </div>
     </main>
   </body>
 </html>
