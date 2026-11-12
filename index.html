@@ -3,82 +3,65 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#11131c">
-    <title>ICE — conversations, your way</title>
+    <meta name="theme-color" content="#101a20">
+    <meta name="description" content="ICE is a friendly place to chat and catch up with your community.">
+    <title>ICE — stay close</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./study-popup.css">
     <script src="./app.js" defer></script>
+    <script src="./study-popup.js" defer></script>
   </head>
   <body>
-    <main class="app-shell">
-      <header class="topbar">
-        <a class="brand" href="#" aria-label="ICE home"><span class="brand-symbol">i</span><span>ice<span class="brand-period">.</span></span></a>
-        <div class="topbar-tools">
-          <button type="button" class="icon-button" id="search-toggle" aria-label="Search messages" title="Search messages">⌕</button>
-          <button type="button" class="icon-button" id="theme-toggle" aria-label="Toggle light theme" title="Toggle theme">☼</button>
-          <div class="avatar" aria-label="Your profile">Y</div>
-        </div>
-      </header>
-
-      <div class="layout">
-        <aside class="tool-rail" aria-label="Chat tools">
-          <div class="rail-label">YOUR SPACE</div>
-          <div class="space-card active-space"><span class="space-icon">✦</span><span><strong>Everyday</strong><small>Your personal chat</small></span><i></i></div>
-          <div class="rail-divider"></div>
-          <div class="rail-label">QUICK TOOLS</div>
-          <button class="rail-tool" type="button" id="rail-search"><span>⌕</span>Find a message</button>
-          <button class="rail-tool" type="button" id="rail-emoji"><span>☺</span>Emoji picker</button>
-          <button class="rail-tool" type="button" id="rail-attach"><span>⌁</span>Share a file</button>
-          <section class="tip-card"><span class="tip-spark">✧</span><strong>A little tip</strong><p>Your local chat history stays in this browser, on this device.</p></section>
-          <div class="rail-bottom"><span class="status-pulse"></span><span id="connection-status">On this device</span></div>
-        </aside>
-
-        <section class="chat-panel" aria-label="ICE chat">
-          <header class="chat-heading">
-            <div class="chat-avatar">✦</div>
-            <div class="chat-title"><h1>Everyday chat</h1><p id="chat-subtitle">A quiet place for your thoughts</p></div>
-            <div class="chat-actions">
-              <button type="button" class="text-action" id="clear-history" title="Clear messages saved in this browser">Clear chat</button>
-              <button type="button" class="mobile-search icon-button" id="mobile-search" aria-label="Search messages">⌕</button>
-            </div>
-          </header>
-
-          <div class="search-bar" id="search-bar" hidden>
-            <span aria-hidden="true">⌕</span>
-            <label class="visually-hidden" for="search-input">Search chat messages</label>
-            <input id="search-input" type="search" placeholder="Search this conversation…" autocomplete="off">
-            <button type="button" id="search-close" aria-label="Close search">×</button>
-            <span class="search-count" id="search-count"></span>
-          </div>
-
-          <section class="conversation" id="conversation" aria-label="Messages">
-            <div class="date-divider"><span>YOUR CONVERSATION</span></div>
-            <div class="welcome" id="welcome"><div class="welcome-mark">✦</div><h2>Make yourself at home</h2><p>Send a message, share a thought, or try a quick tool.</p></div>
-            <ul id="messages" class="messages" aria-live="polite" aria-relevant="additions"></ul>
-          </section>
-
-          <div class="emoji-picker" id="emoji-picker" hidden aria-label="Choose an emoji">
-            <button type="button" aria-label="smiling face">😊</button><button type="button" aria-label="heart eyes">😍</button><button type="button" aria-label="winking face">😉</button><button type="button" aria-label="laughing">😂</button><button type="button" aria-label="thinking face">🤔</button><button type="button" aria-label="party popper">🎉</button><button type="button" aria-label="thumbs up">👍</button><button type="button" aria-label="sparkles">✨</button><button type="button" aria-label="red heart">❤️</button><button type="button" aria-label="wave">👋</button>
-+          </div>
-
-          <form id="message-form" class="composer">
-            <input id="file-input" type="file" hidden>
-            <button type="button" class="composer-tool" id="attach-button" aria-label="Attach a file" title="Attach a file">＋</button>
-            <label class="visually-hidden" for="message-input">Write a message</label>
-            <input id="message-input" name="message" placeholder="Write something…" autocomplete="off" maxlength="2000">
-            <button type="button" class="composer-tool emoji-toggle" id="emoji-button" aria-label="Choose an emoji" title="Choose an emoji">☺</button>
-            <button type="submit" class="send-button"><span>Send</span><span aria-hidden="true">↗</span></button>
-          </form>
-          <p class="composer-note" id="storage-note">Saved on this device · only you can see this local chat</p>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="ICE home"><span class="brand-mark">i</span><span>ice<span class="brand-dot">.</span></span></a>
+      <label class="global-search"><span aria-hidden="true">⌕</span><input id="global-search" type="search" placeholder="Search ICE" aria-label="Search ICE"></label>
+      <div class="topbar-actions"><button class="round-button" type="button" id="theme-toggle" aria-label="Toggle light theme" title="Toggle theme">☼</button><button class="profile-chip" type="button" aria-label="Your profile"><span class="avatar avatar-you">Y</span><span>You</span></button></div>
+    </header>
+    <main class="app-layout" id="home">
+      <aside class="left-panel" aria-label="Navigation and conversations">
+        <nav class="main-nav" aria-label="Main navigation">
+          <button type="button" class="nav-item active" data-view="chats"><span>▣</span> Chats</button>
+          <button type="button" class="nav-item" data-view="updates"><span>◉</span> Updates <span class="nav-badge">3</span></button>
+          <button type="button" class="nav-item" data-view="community"><span>♧</span> Community</button>
+          <button type="button" class="nav-item" data-view="study" aria-haspopup="dialog" aria-expanded="false"><span>✦</span> Study</button>
+        </nav>
+        <section class="inbox" aria-label="Your conversations">
+          <div class="inbox-heading"><div><p class="eyebrow">YOUR PEOPLE</p><h1>Chats</h1></div><button id="new-chat" class="round-button accent-button" type="button" aria-label="Start a new chat">＋</button></div>
+          <label class="chat-search"><span aria-hidden="true">⌕</span><input id="chat-search" type="search" placeholder="Search or start a chat" aria-label="Search conversations"></label>
+          <section class="stories" aria-label="Recent updates"><div class="section-heading"><h2>Updates</h2><button class="text-link" type="button" id="add-status">＋ Add</button></div><div class="story-row" id="story-row"></div></section>
+          <div class="section-heading chat-list-heading"><h2>Recent</h2><button class="text-link" id="filter-unread" type="button">All</button></div>
+          <div class="contact-list" id="contact-list" role="list" aria-label="Chat list"></div>
         </section>
-
-        <aside class="details-panel" aria-label="Conversation details">
-          <div class="details-top"><span class="eyebrow">A MOMENT FOR YOU</span><div class="clock-face">☾</div><div class="local-time" id="local-time">--:--</div><p id="local-date">Loading your local date…</p></div>
-          <div class="detail-divider"></div>
-          <section class="activity-card"><span class="eyebrow">YOUR ACTIVITY</span><div class="activity-number" id="message-count">0</div><p>messages in this chat</p><div class="activity-line"><span id="activity-fill"></span></div><small id="character-count">0 characters exchanged</small></section>
-          <div class="details-note"><span>✧</span><p>Good conversations don't need to be complicated.</p></div>
-          <div class="details-footer">ICE <span>·</span> MADE FOR YOUR MOMENTS</div>
-        </aside>
-      </div>
+        <div class="left-footer"><span class="online-dot"></span><span id="connection-status">Local demo</span><span class="footer-lock" title="Your chats are stored in this browser">▣</span></div>
+      </aside>
+      <section class="chat-panel" aria-label="Chat conversation">
+        <header class="chat-heading"><button type="button" class="back-button" id="back-to-chats" aria-label="Back to chats">‹</button><div class="avatar chat-avatar" id="active-avatar">MC</div><div class="chat-title"><h2 id="active-name">Maya Chen</h2><p id="active-status">online now</p></div><div class="chat-actions"><button type="button" class="round-button" id="chat-search-toggle" aria-label="Search this chat">⌕</button><button type="button" class="round-button" id="chat-info" aria-label="Conversation info">ⓘ</button></div></header>
+        <div class="conversation" id="conversation" aria-label="Messages"><div class="conversation-date"><span>Today</span></div><ul class="messages" id="messages" aria-live="polite" aria-relevant="additions"></ul></div>
+        <div class="typing-indicator" id="typing-indicator" aria-live="polite" hidden>Someone is typing…</div>
+        <form class="composer" id="message-form"><button class="composer-tool" type="button" id="emoji-button" aria-label="Insert emoji" title="Emoji">☺</button><label class="visually-hidden" for="message-input">Write a message</label><input id="message-input" maxlength="2000" autocomplete="off" placeholder="Message"><button class="send-button" type="submit" aria-label="Send message">➤</button></form>
+        <p class="privacy-note">Demo experience · messages are saved only in this browser</p>
+      </section>
+      <aside class="social-panel" aria-label="Community feed">
+        <div class="social-heading"><div><p class="eyebrow">A LITTLE MORE SOCIAL</p><h2>Your community</h2></div><button type="button" class="round-button" id="feed-refresh" aria-label="Refresh community feed">↻</button></div>
+        <section class="reels-panel" aria-label="Short videos"><div class="section-heading"><h3>For you</h3><button type="button" class="text-link" id="reel-toggle">Live</button></div><div class="reels-row" id="reels-row"></div></section>
+        <section class="post-composer" aria-label="Create a post"><div class="composer-profile"><span class="avatar avatar-you">Y</span><label class="visually-hidden" for="post-input">Share an update</label><input id="post-input" maxlength="280" placeholder="What's on your mind?"></div><div class="post-tools"><span>Share a moment with your people</span><button type="button" id="publish-post" class="post-button">Post</button></div></section>
+        <div class="feed-heading"><h3>From your people</h3><span class="feed-dot"></span></div><div class="feed-list" id="feed-list"></div>
+        <section class="online-card"><div class="section-heading"><h3>People you know</h3><span class="online-count">4 online</span></div><div class="online-people" id="online-people"></div></section>
+        <p class="social-disclaimer">Community posts are a local preview. Sign-in and shared publishing are not connected yet.</p>
+      </aside>
     </main>
+
+    <dialog class="study-dialog" id="study-dialog" aria-labelledby="study-dialog-title">
+      <header class="study-dialog-header"><div><p class="eyebrow">YOUR PRIVATE SPACE</p><h2 id="study-dialog-title">Study Space</h2></div><button type="button" class="study-dialog-close" id="study-dialog-close" aria-label="Close study space">×</button></header>
+      <section class="study-space-card" aria-label="Private study tools">
+        <div class="study-card-header"><div><p class="eyebrow">FOCUS SESSION</p><h2>Make room to focus</h2></div><button type="button" id="study-toggle" class="study-toggle" aria-label="Toggle private study focus mode">Focus</button></div>
+        <div class="study-pill-row"><span class="study-pill">45 min</span><span class="study-pill mute">Private · saved on this device</span></div>
+        <div class="study-timer-wrap"><div class="study-timer" id="study-timer">00:45:00</div><div class="study-timer-controls"><button type="button" id="study-start" class="study-timer-button">Start</button><button type="button" id="study-pause" class="study-timer-button subtle">Pause</button><button type="button" id="study-reset" class="study-timer-button subtle">Reset</button></div></div>
+        <section class="study-subpanel notes-panel"><div class="panel-head"><h3>Study notes</h3><button type="button" id="add-note" class="tiny-button" aria-label="Focus study notes">＋</button></div><textarea id="study-notes" aria-label="Study notes" placeholder="Quick thoughts, formulas, and ideas..."></textarea></section>
+        <section class="study-subpanel tasks-panel"><div class="panel-head"><h3>Tasks</h3><span class="study-badge" id="study-task-count">0</span></div><ul id="study-task-list" class="study-task-list"></ul><form id="study-task-form" class="study-task-form"><label class="visually-hidden" for="study-task-input">Add task</label><input id="study-task-input" type="text" maxlength="120" placeholder="Add a study task"><button type="submit">Add</button></form></section>
+      </section>
+      <p class="study-dialog-note">Your notes and tasks stay in this browser and are not shared with your community.</p>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   </body>
 </html>
