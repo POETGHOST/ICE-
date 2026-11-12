@@ -168,7 +168,23 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({ error: "Login failed" });
   }
 });
+app.get("/api/users", authenticate, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, username
+       FROM users
+       WHERE id <> $1
+       ORDER BY username ASC
+       LIMIT 100`,
+      [req.user.id]
+    );
 
+    res.json({ users: result.rows });
+  } catch (error) {
+    console.error("User directory error:", error);
+    res.status(500).json({ error: "Could not load users" });
+  }
+});
 app.get("/api/me", authenticate, async (req, res) => {
   const result = await pool.query(
     "SELECT id, username, email FROM users WHERE id = $1",
