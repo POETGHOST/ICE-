@@ -7,6 +7,11 @@
     { id: 'nina', name: 'Nina Patel', initials: 'NP', color: 'gold', status: 'last seen today at 8:10 AM', preview: 'Voice message · 0:18', time: 'Mon', unread: 0, messages: [{ text: 'Voice message · 0:18', from: 'them', time: 'Monday' }] }
   ];
   const stories = [{ name: 'Maya', initials: 'M', color: 'coral', label: 'Coffee walk' }, { name: 'Jordan', initials: 'J', color: 'blue', label: 'Weekend escape' }, { name: 'Alex', initials: 'A', color: 'green', label: 'Tiny wins' }, { name: 'Nina', initials: 'N', color: 'gold', label: 'New recipe' }];
+  const reels = [
+    { title: 'City walk', creator: 'Maya', tag: '#weekend', likes: '24.9K', comments: '1.4K', accent: 'sunset', mood: 'Warm' },
+    { title: 'Mini kitchen reset', creator: 'Nina', tag: '#cozy', likes: '18.7K', comments: '943', accent: 'mint', mood: 'Fresh' },
+    { title: 'Quick workout', creator: 'Alex', tag: '#hustle', likes: '31.2K', comments: '2.1K', accent: 'pink', mood: 'Boost' }
+  ];
   const seedPosts = [
     { name: 'Jordan Lee', initials: 'JL', color: 'blue', time: '18 min ago', text: 'Found a little trail with the best view of the city. Needed this reset today 🌿', likes: 8, comments: 2 },
     { name: 'Nina Patel', initials: 'NP', color: 'gold', time: '1 hr ago', text: 'Trying a new recipe tonight. If it works, I promise to share the recipe (and the mess) 🍋', likes: 12, comments: 4 },
@@ -24,7 +29,9 @@
   let persisted = {};
   try { persisted = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; } catch (_) { persisted = {}; }
 
-  function escapeText(value) { return String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]); }
+  function escapeText(value) {
+    return String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+  }
   function initialsClass(color) { return `avatar-${color}`; }
   function showToast(message) {
     toast.textContent = message;
@@ -57,6 +64,23 @@
       const button = document.createElement('button'); button.type = 'button'; button.className = 'story';
       button.innerHTML = `<span class="story-ring"><span class="avatar ${initialsClass(story.color)}">${escapeText(story.initials)}</span></span><span>${escapeText(story.name)}</span>`;
       button.addEventListener('click', () => showToast(`${story.name}'s update: ${story.label}`)); row.appendChild(button);
+    });
+  }
+  function renderReels() {
+    const row = document.getElementById('reels-row');
+    row.replaceChildren();
+    reels.forEach((reel) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = `reel-card reel-${reel.accent}`;
+      card.innerHTML = `
+        <span class="reel-tag">${escapeText(reel.tag)}</span>
+        <span class="reel-meta"><span class="reel-user">${escapeText(reel.creator)}</span><span class="reel-mood">${escapeText(reel.mood)}</span></span>
+        <span class="reel-title">${escapeText(reel.title)}</span>
+        <span class="reel-stats"><span>♡ ${escapeText(reel.likes)}</span><span>💬 ${escapeText(reel.comments)}</span></span>
+      `;
+      card.addEventListener('click', () => showToast(`${reel.creator} just posted a fresh short video.`));
+      row.appendChild(card);
     });
   }
   function renderMessages() {
@@ -100,6 +124,7 @@
   function currentTime() { return new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
 
   renderStories();
+  renderReels();
   renderContacts();
   renderMessages();
   renderFeed();
@@ -132,7 +157,7 @@
     const youPost = { name: 'You', initials: 'Y', color: 'you', time: 'Just now', text, likes: 0, comments: 0 };
     persisted.posts = [youPost, ...(persisted.posts || [])]; save(); input.value = ''; renderFeed(); showToast('Your update was saved in this browser.');
   });
-  document.getElementById('feed-refresh').addEventListener('click', () => { renderFeed(); showToast('Your community feed is up to date.'); });
+  document.getElementById('feed-refresh').addEventListener('click', () => { renderFeed(); renderReels(); showToast('Your community feed is up to date.'); });
   document.querySelectorAll('.nav-item').forEach((item) => item.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach((nav) => nav.classList.toggle('active', nav === item));
     if (item.dataset.view === 'updates') showToast('Updates from your people are shown above the chat list.');
@@ -141,5 +166,6 @@
   }));
   document.getElementById('global-search').addEventListener('keydown', (event) => { if (event.key === 'Enter') { document.getElementById('chat-search').value = event.currentTarget.value; renderContacts(event.currentTarget.value); document.getElementById('chat-search').focus(); } });
   document.getElementById('emoji-button').addEventListener('click', () => { const start = messageInput.selectionStart ?? messageInput.value.length; messageInput.value = `${messageInput.value.slice(0, start)}😊${messageInput.value.slice(start)}`; messageInput.focus(); });
+  document.getElementById('reel-toggle').addEventListener('click', () => showToast('Short-form content is in the preview feed for a quick social scroll.'));
   window.addEventListener('keydown', (event) => { if (event.key === 'Escape') document.body.classList.remove('chat-open'); });
 })();

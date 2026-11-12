@@ -51,6 +51,12 @@
 
       <aside class="social-panel" aria-label="Community feed">
         <div class="social-heading"><div><p class="eyebrow">A LITTLE MORE SOCIAL</p><h2>Your community</h2></div><button type="button" class="round-button" id="feed-refresh" aria-label="Refresh community feed" title="Refresh">↻</button></div>
+
+        <section class="reels-panel" aria-label="Short videos">
+          <div class="section-heading"><h3>For you</h3><button type="button" class="text-link" id="reel-toggle">Live</button></div>
+          <div class="reels-row" id="reels-row"></div>
+        </section>
+
         <section class="post-composer" aria-label="Create a post"><div class="composer-profile"><span class="avatar avatar-you">Y</span><label class="visually-hidden" for="post-input">Share an update</label><input id="post-input" maxlength="280" placeholder="What's on your mind?"></div><div class="post-tools"><span>Share a moment with your people</span><button type="button" id="publish-post" class="post-button">Post</button></div></section>
         <div class="feed-heading"><h3>From your people</h3><span class="feed-dot"></span></div>
         <div class="feed-list" id="feed-list"></div>
