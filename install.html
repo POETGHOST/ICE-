@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101a20">
+  <meta name="description" content="ICE is a friendly place to chat and catch up with your community.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/ice-icon.svg" type="image/svg+xml">
+  <title>ICE — stay close</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; background: #101a20; }
+    body { font-family: system-ui, sans-serif; color: #f5f7f8; }
+    .app { position: fixed; inset: 0; }
+    iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .install { position: fixed; z-index: 2; right: 16px; top: max(16px, env(safe-area-inset-top)); padding: 10px 15px; border: 0; border-radius: 999px; background: #c6f36b; color: #17200d; font: inherit; font-weight: 700; box-shadow: 0 3px 14px #0005; }
+    .install[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <main class="app"><iframe src="./index.html" title="ICE chat app"></iframe></main>
+  <button class="install" id="install" type="button" hidden>Install ICE</button>
+  <script>
+    let installPrompt;
+    const installButton = document.getElementById('install');
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      installPrompt = event;
+      installButton.hidden = false;
+    });
+    installButton.addEventListener('click', async () => {
+      if (!installPrompt) return;
+      installPrompt.prompt();
+      await installPrompt.userChoice;
+      installPrompt = null;
+      installButton.hidden = true;
+    });
+    window.addEventListener('appinstalled', () => {
+      installButton.hidden = true;
+      installPrompt = null;
+    });
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(console.error));
+    }
+  </script>
+</body>
+</html>
