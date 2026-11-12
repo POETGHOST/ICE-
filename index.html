@@ -22,7 +22,31 @@
           <button type="button" class="nav-item active" data-view="chats"><span>▣</span> Chats</button>
           <button type="button" class="nav-item" data-view="updates"><span>◉</span> Updates <span class="nav-badge">3</span></button>
           <button type="button" class="nav-item" data-view="community"><span>♧</span> Community</button>
+          <button type="button" class="nav-item" data-view="study"><span>✦</span> Study</button>
         </nav>
+
+        <section class="study-space-card" aria-label="Private study space">
+          <div class="study-card-header">
+            <div>
+              <p class="eyebrow">PRIVATE SPACE</p>
+              <h2>Study Space</h2>
+            </div>
+            <button type="button" id="study-toggle" class="study-toggle" aria-label="Toggle private study mode">Focus</button>
+          </div>
+          <div class="study-pill-row">
+            <span class="study-pill">90 min</span>
+            <span class="study-pill mute">Quiet mode</span>
+          </div>
+          <div class="study-metric">
+            <strong>00:42:13</strong>
+            <span>deep work timer</span>
+          </div>
+          <div class="study-actions">
+            <button type="button" class="study-action subtle" data-study-action="notes">Notes</button>
+            <button type="button" class="study-action" data-study-action="tasks">Tasks</button>
+          </div>
+        </section>
+
         <section class="inbox" aria-label="Your conversations">
           <div class="inbox-heading"><div><p class="eyebrow">YOUR PEOPLE</p><h1>Chats</h1></div><button id="new-chat" class="round-button accent-button" type="button" aria-label="Start a new chat" title="Start a new chat">＋</button></div>
           <label class="chat-search"><span aria-hidden="true">⌕</span><input id="chat-search" type="search" placeholder="Search or start a chat" aria-label="Search conversations"></label>
@@ -55,6 +79,15 @@
         <section class="reels-panel" aria-label="Short videos">
           <div class="section-heading"><h3>For you</h3><button type="button" class="text-link" id="reel-toggle">Live</button></div>
           <div class="reels-row" id="reels-row"></div>
+        </section>
+
+        <section class="study-mini-panel" aria-label="Study notes preview">
+          <div class="section-heading"><h3>Study notes</h3><span class="study-mini-badge">3</span></div>
+          <ul class="study-mini-list">
+            <li><span>Review calculus formulas</span><time>10:30</time></li>
+            <li><span>Outline biology revision</span><time>11:15</time></li>
+            <li><span>Finish chemistry flashcards</span><time>12:00</time></li>
+          </ul>
         </section>
 
         <section class="post-composer" aria-label="Create a post"><div class="composer-profile"><span class="avatar avatar-you">Y</span><label class="visually-hidden" for="post-input">Share an update</label><input id="post-input" maxlength="280" placeholder="What's on your mind?"></div><div class="post-tools"><span>Share a moment with your people</span><button type="button" id="publish-post" class="post-button">Post</button></div></section>

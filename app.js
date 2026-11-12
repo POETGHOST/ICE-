@@ -162,7 +162,20 @@
     document.querySelectorAll('.nav-item').forEach((nav) => nav.classList.toggle('active', nav === item));
     if (item.dataset.view === 'updates') showToast('Updates from your people are shown above the chat list.');
     if (item.dataset.view === 'community') document.querySelector('.social-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (item.dataset.view === 'study') {
+      document.body.classList.toggle('study-mode');
+      showToast('Private study mode is now active.');
+    }
     if (item.dataset.view === 'chats') document.getElementById('chat-search').focus();
+  }));
+  document.getElementById('study-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('study-mode');
+    const enabled = document.body.classList.contains('study-mode');
+    showToast(enabled ? 'Private study space enabled.' : 'Private study space paused.');
+  });
+  document.querySelectorAll('[data-study-action]').forEach((button) => button.addEventListener('click', () => {
+    const action = button.dataset.studyAction;
+    showToast(action === 'notes' ? 'Study notes opened in a private workspace.' : 'Your study tasks are ready to review.');
   }));
   document.getElementById('global-search').addEventListener('keydown', (event) => { if (event.key === 'Enter') { document.getElementById('chat-search').value = event.currentTarget.value; renderContacts(event.currentTarget.value); document.getElementById('chat-search').focus(); } });
   document.getElementById('emoji-button').addEventListener('click', () => { const start = messageInput.selectionStart ?? messageInput.value.length; messageInput.value = `${messageInput.value.slice(0, start)}😊${messageInput.value.slice(start)}`; messageInput.focus(); });
