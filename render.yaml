@@ -1,5 +1,4 @@
 
-
 version: "1"
 
 services:
@@ -18,13 +17,5 @@ services:
         generateValue: true
       - key: DATABASE_URL
         fromDatabase:
-          name: ice-db
+          name: ICE
           property: connectionString
-
-databases:
-  - name: ice-db
-    databaseName: ice_857e
-    user: ice_857e_user
-    plan: free
-    region: virginia
-    postgresMajorVersion: "18"
