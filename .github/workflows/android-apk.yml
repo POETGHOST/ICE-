@@ -1,0 +1,66 @@
+
+name: Build ICE Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/android-apk.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Capacitor
+        run: npm install --no-save @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
+
+      - name: Create Android app
+        run: |
+          mkdir -p www
+          echo '<!doctype html><html><body>ICE</body></html>' > www/index.html
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.poetghost.ice",
+            "appName": "ICE",
+            "webDir": "www",
+            "server": {
+              "url": "https://ice-app-mug0.onrender.com",
+              "cleartext": false,
+              "allowNavigation": [
+                "ice-app-mug0.onrender.com"
+              ]
+            }
+          }
+          EOF
+          npx cap add android
+          npx cap sync android
+
+      - name: Build APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ICE-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
