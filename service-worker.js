@@ -6,13 +6,10 @@ const APP_FILES = [
   "./index.html",
   "./install.html",
   "./manifest.webmanifest",
-  "./style.css",
-  "./study.css",
   "./study-popup.css",
   "./app.js",
   "./auth.js",
   "./chat-client.js",
-  "./study.js",
   "./study-popup.js",
   "./icons/ice-icon.svg"
 ];
