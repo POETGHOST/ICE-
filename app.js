@@ -208,7 +208,9 @@
     save(); renderMessages(); renderContacts(document.getElementById('chat-search').value);
     messageInput.value = '';
   });
-  document.getElementById('chat-search').addEventListener('input', (event) => renderContacts(event.target.value));
+  document.getElementById('chat-search').addEventListener('input', (event) => {
+  if (!window.ICEAuth?.user) renderContacts(event.target.value);
+});
   document.getElementById('filter-unread').addEventListener('click', (event) => { showUnreadOnly = !showUnreadOnly; event.currentTarget.textContent = showUnreadOnly ? 'Unread' : 'All'; renderContacts(document.getElementById('chat-search').value); });
   document.getElementById('back-to-chats').addEventListener('click', () => document.body.classList.remove('chat-open'));
   document.getElementById('theme-toggle').addEventListener('click', () => document.body.classList.toggle('light-theme'));
