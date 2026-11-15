@@ -118,3 +118,350 @@ button { cursor: pointer; }
 @media (max-width: 1120px) { .app-layout { grid-template-columns: 300px minmax(360px, 1fr); }.social-panel { display: none; }.topbar { grid-template-columns: 200px minmax(180px, 560px) 1fr; } }
 @media (max-width: 760px) { .topbar { height: 58px; padding: 0 13px; grid-template-columns: auto minmax(80px, 1fr) auto; gap: 12px; }.brand { font-size: 20px; }.brand-mark { width: 28px; height: 28px; }.global-search { height: 34px; padding: 0 10px; }.global-search input { font-size: 11px; }.profile-chip { padding-right: 4px; }.profile-chip > span:last-child { display: none; }.topbar-actions { gap: 5px; }.app-layout { position: relative; min-height: calc(100vh - 58px); display: block; }.left-panel { height: calc(100vh - 58px); border-right: 0; }.main-nav { padding: 10px; justify-content: space-around; }.inbox { padding: 16px 12px 5px; }.chat-panel { display: none; min-height: calc(100vh - 58px); height: calc(100vh - 58px); }.chat-open .left-panel { display: none; }.chat-open .chat-panel { display: flex; }.back-button { width: 28px; height: 34px; display: inline-grid; place-items: center; border: 0; background: transparent; color: #aebac0; font-size: 27px; }.conversation { padding: 16px 13px; }.chat-heading { padding: 9px 10px; }.composer { margin-right: 8px; margin-left: 8px; }.message { max-width: 88%; }.social-panel { display: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+/* =========================================
+   ICE NEXT — BOLD AFRICAN SOCIAL DESIGN
+   ========================================= */
+
+:root {
+  --ice-blue: #1687ff;
+  --ice-blue-light: #55b5ff;
+  --ice-coral: #ff765e;
+  --ice-gold: #f4bd55;
+  --ice-bg: #080f1c;
+  --ice-panel: #101c2d;
+  --ice-card: #17263a;
+  --ice-line: #263850;
+  --ice-text: #f4f7fc;
+  --ice-muted: #9aabc1;
+  --green: #1687ff;
+  --green-dark: #124d91;
+  --hover: #1b304a;
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 85% 0%, rgba(22,135,255,.13), transparent 35%),
+    var(--ice-bg);
+  color: var(--ice-text);
+}
+
+/* ICE identity — clean speech bubble, electric blue */
+.brand {
+  color: #fff;
+  font-size: 27px;
+  letter-spacing: -1.5px;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 32px;
+  border-radius: 12px 12px 12px 3px;
+  background: var(--ice-blue);
+  color: white;
+  font-weight: 800;
+  box-shadow: none;
+}
+
+.brand-dot {
+  color: var(--ice-blue-light);
+}
+
+/* Main frame */
+.topbar {
+  background: rgba(8,15,28,.96);
+  border-bottom: 1px solid var(--ice-line);
+  backdrop-filter: blur(16px);
+}
+
+.app-layout {
+  background: var(--ice-bg);
+}
+
+.left-panel,
+.social-panel {
+  background: var(--ice-panel);
+  border-color: var(--ice-line);
+}
+
+.chat-panel {
+  background: #0b1524;
+}
+
+/* Navigation */
+.main-nav {
+  border-color: var(--ice-line);
+  gap: 6px;
+}
+
+.nav-item {
+  border-radius: 12px;
+  color: var(--ice-muted);
+  transition: background .2s, color .2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: rgba(22,135,255,.16);
+  color: var(--ice-blue-light);
+}
+
+.nav-badge {
+  background: var(--ice-coral);
+}
+
+/* Search and buttons */
+.global-search,
+.chat-search,
+.round-button,
+.profile-chip {
+  background: var(--ice-card);
+  border: 1px solid var(--ice-line);
+}
+
+.global-search:focus-within,
+.chat-search:focus-within {
+  border-color: var(--ice-blue);
+}
+
+.accent-button,
+.send-button,
+.post-button {
+  background: var(--ice-blue);
+  color: white;
+}
+
+.accent-button:hover,
+.send-button:hover,
+.post-button:hover {
+  background: #0873e8;
+}
+
+/* Conversations */
+.contact {
+  border-radius: 12px;
+  margin-bottom: 3px;
+}
+
+.contact:hover,
+.contact.selected {
+  background: rgba(22,135,255,.12);
+}
+
+.contact-top strong,
+.chat-title h2 {
+  color: #fff;
+}
+
+.contact-bottom,
+.contact-top time,
+.chat-title p {
+  color: var(--ice-muted);
+}
+
+.avatar {
+  border-color: var(--ice-line);
+}
+
+.story-ring {
+  border-color: var(--ice-coral);
+}
+
+.chat-heading {
+  background: var(--ice-panel);
+  border-color: var(--ice-line);
+}
+
+.conversation {
+  background-color: #0b1524;
+  background-image:
+    radial-gradient(rgba(85,181,255,.09) .8px, transparent .8px);
+  background-size: 22px 22px;
+}
+
+.message-in {
+  background: #1b2b40;
+  border: 1px solid #293e58;
+}
+
+.message-out {
+  background: #124d91;
+  border: 1px solid #1d65b3;
+}
+
+.composer {
+  background: var(--ice-card);
+  border: 1px solid var(--ice-line);
+}
+
+/* Social feed */
+.social-heading h2 {
+  color: white;
+}
+
+.post-composer,
+.feed-post,
+.online-card {
+  background: var(--ice-card);
+  border-color: var(--ice-line);
+  border-radius: 16px;
+}
+
+.composer-profile input {
+  background: #0d192a;
+  border: 1px solid var(--ice-line);
+}
+
+.post-copy {
+  color: #dce7f7;
+}
+
+.post-actions button:hover,
+.post-actions button.liked {
+  color: var(--ice-blue-light);
+  background: rgba(22,135,255,.13);
+}
+
+.feed-dot,
+.online-dot {
+  background: #36d69a;
+}
+
+/* Short-video discovery cards */
+.reel-card {
+  min-height: 205px;
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.reel-sunset {
+  background: linear-gradient(160deg, #ff9b70, #d94d70 48%, #35245f);
+}
+
+.reel-mint {
+  background: linear-gradient(160deg, #53d8c2, #147b91 48%, #102d48);
+}
+
+.reel-pink {
+  background: linear-gradient(160deg, #f4a6c8, #a84c9e 48%, #282451);
+}
+
+/* African-inspired colour accents */
+.eyebrow {
+  color: var(--ice-gold);
+}
+
+.text-link {
+  color: var(--ice-blue-light);
+}
+
+.online-person i {
+  background: #36d69a;
+}
+
+.left-footer {
+  border-color: var(--ice-line);
+}
+
+/* Mobile: make the community feed reachable */
+@media (max-width: 760px) {
+  .topbar {
+    background: #080f1c;
+    border-color: var(--ice-line);
+  }
+
+  .app-layout {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .left-panel {
+    height: auto;
+    min-height: calc(100vh - 58px);
+    border: 0;
+  }
+
+  .main-nav {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    justify-content: space-around;
+    background: #101c2d;
+    border-bottom: 1px solid var(--ice-line);
+  }
+
+  .nav-item {
+    padding: 0 9px;
+    font-size: 11px;
+  }
+
+  .social-panel {
+    display: block;
+    padding: 22px 14px 35px;
+    border: 0;
+    border-top: 1px solid var(--ice-line);
+    background: #101c2d;
+  }
+
+  .chat-panel {
+    min-height: calc(100vh - 58px);
+  }
+
+  .chat-open .left-panel {
+    display: none;
+  }
+
+  .chat-open .social-panel {
+    display: none;
+  }
+
+  .chat-open .chat-panel {
+    display: flex;
+  }
+
+  .reels-row {
+    gap: 9px;
+  }
+
+  .reel-card {
+    flex-basis: 135px;
+    min-height: 190px;
+  }
+
+  .feed-post,
+  .post-composer,
+  .online-card {
+    border-radius: 14px;
+  }
+}
+
+/* Keep the light theme readable */
+.light-theme {
+  --bg: #f1f5fa;
+  --panel: #fff;
+  --line: #dce5ef;
+  --muted: #64758a;
+  --text: #18263a;
+  background: #f1f5fa;
+  color: #18263a;
+}
+
+.light-theme .topbar,
+.light-theme .left-panel,
+.light-theme .social-panel {
+  background: #fff;
+}
+
+.light-theme .chat-panel {
+  background: #f1f5fa;
+}
+
+.light-theme .brand {
+  color: #18263a;
+}
+
+.light-theme .nav-item.active {
+  background: #e8f2ff;
+  color: #0873e8;
+}
