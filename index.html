@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICE Social</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #080f20;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  padding-bottom: 85px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px;
+  background: #0c1730;
+}
+
+.logo {
+  color: #168bff;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.logo span {
+  color: white;
+}
+
+.header-icons {
+  display: flex;
+  gap: 20px;
+  font-size: 22px;
+}
+
+.search {
+  margin: 15px;
+  padding: 13px;
+  border-radius: 25px;
+  background: #172441;
+  color: #9baac3;
+}
+
+.stories {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 12px 15px;
+}
+
+.story {
+  min-width: 65px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.story img {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #168bff;
+  padding: 2px;
+}
+
+.section-title {
+  padding: 15px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.post {
+  background: #101d36;
+  margin: 12px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #168bff, #ff725e);
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+}
+
+.post-content {
+  padding: 0 14px 14px;
+  line-height: 1.5;
+}
+
+.post-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #123c70, #ec665d, #d5a43c);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+  color: #b5c4dd;
+  font-size: 14px;
+}
+
+.actions span {
+  cursor: pointer;
+}
+
+.create {
+  background: #168bff;
+  color: white;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  margin-top: -22px;
+  box-shadow: 0 0 15px #168bff77;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #0c1730;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 13px 5px;
+  border-top: 1px solid #243657;
+  z-index: 10;
+}
+
+.nav-item {
+  color: #9baac3;
+  text-align: center;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.nav-item div {
+  font-size: 21px;
+  margin-bottom: 4px;
+}
+
+.nav-item.active {
+  color: #168bff;
+}
+
+button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ICE<span>.</span></div>
+  <div class="header-icons">
+    <span>⌕</span>
+    <span>♡</span>
+    <span>✉</span>
+  </div>
+</header>
+
+<div class="search">🔍 Search people, videos and communities...</div>
+
+<div class="section-title">Stories</div>
+
+<div class="stories">
+  <div class="story">
+    <img src="https://i.pravatar.cc/100?img=12">
+    <p>Your story</p>
+  </div>
+  <div class="story">
+    <img src="https://i.pravatar.cc/100?img=5">
+    <p>Thabo</p>
+  </div>
+  <div class="story">
+    <img src="https://i.pravatar.cc/100?img=9">
+    <p>Amanda</p>
+  </div>
+  <div class="story">
+    <img src="https://i.pravatar.cc/100?img=15">
+    <p>Neo</p>
+  </div>
+  <div class="story">
+    <img src="https://i.pravatar.cc/100?img=20">
+    <p>Sarah</p>
+  </div>
+</div>
+
+<div class="section-title">Your African community 🌍</div>
+
+<article class="post">
+  <div class="post-header">
+    <div class="avatar">ICE</div>
+    <div>
+      <strong>ICE Community</strong>
+      <p style="color:#8da0be;font-size:12px">
+        @icecommunity · Just now
+      </p>
+    </div>
+  </div>
+
+  <div class="post-content">
+    Welcome to ICE! Connect, share, discover and build
+    something amazing. Africa is connected! 💙🌍
+  </div>
+
+  <div class="post-image"></div>
+
+  <div class="actions">
+    <span onclick="likePost(this)">♡ Like</span>
+    <span onclick="commentPost()">◯ Comment</span>
+    <span onclick="sharePost()">↗ Share</span>
+  </div>
+</article>
+
+<article class="post">
+  <div class="post-header">
+    <div class="avatar">T</div>
+    <div>
+      <strong>Trending Africa</strong>
+      <p style="color:#8da0be;font-size:12px">
+        @trendingafrica · 5 min ago
+      </p>
+    </div>
+  </div>
+
+  <div class="post-content">
+    What's happening in your city today? Tell the ICE
+    community! 🔥
+  </div>
+
+  <div class="actions">
+    <span onclick="likePost(this)">♡ Like</span>
+    <span onclick="commentPost()">◯ Comment</span>
+    <span onclick="sharePost()">↗ Share</span>
+  </div>
+</article>
+
+<nav class="bottom-nav">
+  <div class="nav-item active" onclick="navigate('Home',this)">
+    <div>⌂</div>Home
+  </div>
+  <div class="nav-item" onclick="navigate('Discover',this)">
+    <div>◉</div>Discover
+  </div>
+  <div class="create" onclick="navigate('Create')">+</div>
+  <div class="nav-item" onclick="navigate('Chats',this)">
+    <div>✉</div>Chats
+  </div>
+  <div class="nav-item" onclick="navigate('Profile',this)">
+    <div>●</div>Profile
+  </div>
+</nav>
+
+<script>
+function likePost(element) {
+  element.innerHTML =
+    element.innerHTML.includes('♥') ? '♡ Like' : '♥ Liked';
+}
+
+function commentPost() {
+  alert('ICE comments coming soon!');
+}
+
+function sharePost() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'ICE Social',
+      text: 'Connect with me on ICE!'
+    });
+  } else {
+    alert('Share ICE with your friends!');
+  }
+}
+
+function navigate(page, element) {
+  if (element) {
+    document.querySelectorAll('.nav-item')
+      .forEach(item => item.classList.remove('active'));
+    element.classList.add('active');
+  }
+  alert(page + ' section selected. Connect this to its screen next.');
+}
+</script>
+
+</body>
+</html>
